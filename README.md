@@ -18,9 +18,9 @@ This system demonstrates the power of agent delegation and tool utilization in d
 ## Technology Stack
 
 - **Backend**: Python, FastAPI, ADK
-- **Frontend**: React, TypeScript, Tailwind CSS
-- **Database**: PostgreSQL (optional)
-- **Deployment**: Vercel or Railway
+- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
+- **Database**: MongoDB with Beanie ODM
+- **Deployment**: Vercel (planned)
 
 ## Getting Started
 
@@ -46,7 +46,7 @@ pip install -r requirements.txt
 3. Set up environment variables:
 ```bash
 cp .env.example .env
-# Edit .env file with your Gemini API key and other configuration
+# Edit .env file with your Gemini API key, MongoDB connection string, and other configuration
 ```
 
 4. Run the backend server:
@@ -54,12 +54,26 @@ cp .env.example .env
 uvicorn src.api.main:app --reload
 ```
 
-5. Install and run the frontend (in a separate terminal):
-```bash
-cd frontend
-npm install
-npm run dev
-```
+5. Install and run the frontend (React or Next.js):
+
+   For the original React frontend:
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+
+   For the Next.js frontend:
+   ```bash
+   cd frontend-next
+   npm install
+   npm run dev
+   ```
+
+   Alternatively, use the run script to start both backend and frontend:
+   ```bash
+   ./run.sh
+   ```
 
 ## Project Structure
 
@@ -69,12 +83,15 @@ multi-agent-tutoring-bot/
 │   ├── agents/            # Agent implementations
 │   ├── tools/             # Tool implementations
 │   ├── api/               # API endpoints
-│   ├── utils/             # Utility functions
+│   ├── utils/             # Utility functions (including MongoDB)
 │   ├── config/            # Configuration
 │   ├── models/            # Data models
 │   └── tests/             # Tests
-├── frontend/              # React frontend
+├── frontend/              # Original React frontend
+├── frontend-next/        # Migrated Next.js frontend
 ├── requirements.txt       # Python dependencies
+├── run.sh                # Run script for local development
+├── MIGRATION.md          # Migration documentation
 └── README.md             # Project documentation
 ```
 
