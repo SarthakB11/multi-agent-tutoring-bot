@@ -218,7 +218,7 @@ async def query(
         # Store the user message
         user_message = ChatMessage(
             user_id=request.user_id,
-            content=request.query,
+            content=request.question,  # Use question field
             role="user",
             timestamp=time.time()
         )
@@ -318,7 +318,7 @@ async def query(
         response_obj = QueryResponse(
             request_id=request_id,
             session_id=session_id,
-            query=request.query,
+            query=request.question,
             answer=response,
             agent_details=agent_details,
             debug_info=debug_info if settings.DEBUG else None

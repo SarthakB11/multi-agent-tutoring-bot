@@ -10,8 +10,11 @@ class QueryRequest(BaseModel):
     Request model for the query endpoint.
     """
     question: str = Field(..., min_length=1, max_length=1000, description="The user's question")
+    query: Optional[str] = Field(None, description="Alias for question, used internally")
+    user_id: str = Field("anonymous", description="User identifier")
     request_id: Optional[str] = Field(None, description="Client-generated ID for traceability")
     session_id: Optional[str] = Field(None, description="Client-generated session ID for maintaining context")
+    debug: Optional[bool] = Field(False, description="Enable debug mode")
     
     @validator('request_id', 'session_id')
     def validate_ids(cls, v):
@@ -53,6 +56,7 @@ class QueryResponse(BaseModel):
     """
     request_id: str = Field(..., description="Echoes client request_id or server-generated one")
     session_id: Optional[str] = Field(None, description="Echoes client session_id or server-generated one")
+    query: str = Field(..., description="The original query from the request")
     answer: str = Field(..., description="The AI agent's generated answer to the question")
     agent_details: AgentDetails = Field(..., description="Details about the agent used")
     debug_info: DebugInfo = Field(..., description="Debug information about query processing")
