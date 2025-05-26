@@ -1,7 +1,7 @@
 """
 ADK data models for the Multi-Agent AI Tutoring System.
 """
-from typing import Dict, Any, Optional, List, Union
+from typing import Dict, Any, Optional, List, Union, Literal
 from pydantic import BaseModel, Field
 from enum import Enum
 
@@ -31,7 +31,7 @@ class DelegationEvent(BaseModel):
     """
     Event for delegating a query to a sub-agent.
     """
-    event_type: str = Field(EventType.DELEGATION, const=True)
+    event_type: Literal[EventType.DELEGATION] = Field(EventType.DELEGATION)
     target_agent: str = Field(..., description="The name of the target agent")
     confidence: float = Field(..., ge=0.0, le=1.0, description="Confidence score for the delegation")
     context: Dict[str, Any] = Field(default_factory=dict, description="Additional context for the target agent")
@@ -42,7 +42,7 @@ class ClarificationEvent(BaseModel):
     """
     Event for requesting clarification from the user.
     """
-    event_type: str = Field(EventType.CLARIFICATION, const=True)
+    event_type: Literal[EventType.CLARIFICATION] = Field(EventType.CLARIFICATION)
     message: str = Field(..., description="Clarification message for the user")
     options: Optional[List[str]] = Field(None, description="Possible options for the user to choose from")
     request_id: str = Field(..., description="Request ID for traceability")
@@ -52,7 +52,7 @@ class GeneralResponseEvent(BaseModel):
     """
     Event for providing a general response when no delegation is possible.
     """
-    event_type: str = Field(EventType.GENERAL_RESPONSE, const=True)
+    event_type: Literal[EventType.GENERAL_RESPONSE] = Field(EventType.GENERAL_RESPONSE)
     response: str = Field(..., description="The response text")
     request_id: str = Field(..., description="Request ID for traceability")
     trace_id: str = Field(..., description="Trace ID for correlation")
@@ -61,7 +61,7 @@ class ToolInvocationEvent(BaseModel):
     """
     Event for invoking a tool.
     """
-    event_type: str = Field(EventType.TOOL_INVOCATION, const=True)
+    event_type: Literal[EventType.TOOL_INVOCATION] = Field(EventType.TOOL_INVOCATION)
     tool_name: str = Field(..., description="The name of the tool to invoke")
     inputs: Dict[str, Any] = Field(..., description="The inputs for the tool")
     request_id: str = Field(..., description="Request ID for traceability")
@@ -71,7 +71,7 @@ class ToolResultEvent(BaseModel):
     """
     Event for returning the result of a tool invocation.
     """
-    event_type: str = Field(EventType.TOOL_RESULT, const=True)
+    event_type: Literal[EventType.TOOL_RESULT] = Field(EventType.TOOL_RESULT)
     tool_name: str = Field(..., description="The name of the tool that was invoked")
     result: Dict[str, Any] = Field(..., description="The result of the tool invocation")
     error: Optional[str] = Field(None, description="Error message if the tool invocation failed")
@@ -82,7 +82,7 @@ class FinalResponseEvent(BaseModel):
     """
     Event for providing the final response to the user.
     """
-    event_type: str = Field(EventType.FINAL_RESPONSE, const=True)
+    event_type: Literal[EventType.FINAL_RESPONSE] = Field(EventType.FINAL_RESPONSE)
     response: str = Field(..., description="The response text")
     agent_used: str = Field(..., description="The name of the agent that generated the response")
     tool_used: Optional[str] = Field(None, description="The name of the tool used by the agent")
@@ -94,7 +94,7 @@ class ErrorEvent(BaseModel):
     """
     Event for reporting an error.
     """
-    event_type: str = Field(EventType.ERROR, const=True)
+    event_type: Literal[EventType.ERROR] = Field(EventType.ERROR)
     error_code: str = Field(..., description="Error code")
     error_message: str = Field(..., description="Error message")
     details: Optional[Dict[str, Any]] = Field(None, description="Additional error details")
